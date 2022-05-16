@@ -1,0 +1,127 @@
+#include <drawlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+ int x, y, t, k, a=0, bar1x=440, bar2x=125, bar3x=-100, bar1y=200, bar2y=300, bar3y=400, circlex=320, circley=50;
+ dl_initialize(1.0);
+
+
+ while (1) {
+/*初期画面*/
+  dl_clear(DL_RGB(255,255,255));
+  
+  dl_wait(0.01);
+ if(dl_get_event(&t, &k, &x, &y) && t == DL_EVENT_L_DOWN)
+   break ;
+}
+ 
+ while (1) {
+/*一つ目のブロック動かす*/
+  dl_clear(DL_RGB(255,255,255));
+dl_circle (circlex, circley, 15, DL_C("black"), 1, 1);
+  bar1x = bar1x + 1 ;
+
+  dl_rectangle(bar1x, bar1y, 200 + bar1x, 250,
+DL_C("red"),1, 1);
+  
+ 
+
+  if(bar1x == 640)
+   bar1x = -200 ;
+  
+
+
+/*二つ目のブロック動かす*/
+  
+
+  bar2x = bar2x + 1 ;
+
+  dl_rectangle(bar2x, bar2y, 210+ bar2x, 350,
+DL_C("yellow"),1, 1);
+  
+
+  if(bar2x == 640)
+   bar2x = -200 ;
+   dl_wait(0.001);
+   
+  
+  
+/*三つ目のブロック動かす*/
+
+
+  bar3x = bar3x + 1 ;
+
+  dl_rectangle(bar3x, bar3y, 110 + bar3x, 450,
+DL_C("blue"),1, 1);
+  
+  
+
+  if(bar3x == 640)
+   bar3x = -200 ;
+  dl_wait(0.001);
+  if(dl_get_event(&t, &k, &x, &y) && t == DL_EVENT_R_DOWN)
+   break ;
+  }
+/*動きを止めてボールを落とす*/
+ while (1) {
+  dl_clear(DL_RGB(255,255,255));
+  dl_rectangle(bar1x, bar1y, 200 + bar1x, 250,
+DL_C("red"),1, 1);
+
+  dl_rectangle(bar2x, bar2y, 210 + bar2x, 350,
+DL_C("yellow"),1, 1);
+  dl_rectangle(bar3x, bar3y, 110 + bar3x, 450,
+DL_C("blue"),1, 1);
+  dl_circle (circlex, circley , 15, DL_C("black"), 1, 1);
+
+ circley = circley +1 ;
+  dl_wait(0.01);
+  if (circlex + 14 >= bar1x && circlex - 14 <=200 + bar1x && circley + 15 ==bar1y)
+  break ;
+  if (circlex + 14 >= bar2x && circlex - 14 <=210 + bar2x && circley + 15 ==bar2y)
+  break;
+  if (circlex + 14 >= bar3x && circlex - 14 <=110 + bar3x && circley + 15 ==bar3y) 
+  break;
+  if (circley ==480)
+  break ;
+}
+ 
+/*赤い棒に当たったらMISSを表示*/
+  if (circlex + 14 >= bar1x && circlex - 14 <=200 + bar1x && circley + 15 ==bar1y){
+  char miss[] = "MISS";
+ while(1){
+  dl_text(miss, 150, 380, 3, dl_color_from_name("black"), 3);
+  if(dl_get_event(&t, &k, &x, &y) && t == DL_EVENT_L_DOWN)
+   break ;
+ }
+ }
+  /*黄色い棒に当たったらMISSを表示*/
+  if (circlex + 14 >= bar2x && circlex - 14 <=210 + bar2x && circley + 15 ==bar2y){
+  char miss[] = "MISS";
+ while(1){
+  dl_text(miss, 150, 380, 3, dl_color_from_name("black"), 3);
+  if(dl_get_event(&t, &k, &x, &y) && t == DL_EVENT_L_DOWN)
+   break ;
+ }
+ }
+ /*青い棒に当たったらMISSを表示*/
+  if (circlex + 14 >= bar3x && circlex - 14 <=110 + bar3x && circley + 15 ==bar3y){ 
+  char miss[] = "MISS";
+ while(1){
+  dl_text(miss, 150, 380, 3, dl_color_from_name("black"), 3);
+  if(dl_get_event(&t, &k, &x, &y) && t == DL_EVENT_L_DOWN)
+   break ;
+ }
+ }
+ /*ボールが一番下まで言ったらCLEREを表示*/
+  if (circley ==480) {
+  char clear[] = "CLEAR";
+ while(1){
+  dl_text(clear, 150, 380, 3, dl_color_from_name("black"), 3);
+  if(dl_get_event(&t, &k, &x, &y) && t == DL_EVENT_L_DOWN)
+   break ;
+ }
+ }
+ 
+ return 0;

@@ -1,0 +1,16 @@
+#include "mbed.h"
+#include "Motor.h"
+BusOut led(D8,D13);
+BusIn sw(D3,D6);
+BusIn in(D2, D4, D5, D7);
+Motor motor1(A1, A2);
+Motor motor2(D11, D12);
+int main() {
+ in.mode(PullUp);
+ sw.mode(PullUp);
+ while(1) {
+ motor1 = !sw[0];
+ motor2 = !sw[1];
+ wait(0.001);
+ }
+} 
